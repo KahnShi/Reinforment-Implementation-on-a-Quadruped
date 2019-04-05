@@ -11,7 +11,7 @@
   <!--height:z width:y width:x -->
   <xacro:property name="body_length" value="${scaling_factor*0.208}" />
   <xacro:property name="body_width" value="${scaling_factor*0.108}" />
-  <xacro:property name="body_height" value="${scaling_factor*0.055}" />
+  <xacro:property name="body_height" value="${scaling_factor*0.1}" />
   <xacro:property name="body_mass" value="${(scaling_factor**3)*0.4}" />
 
   <!-- we donot want a small object upon the robot body -->
@@ -23,23 +23,23 @@
   <xacro:property name="leg1_width" value="${scaling_factor*0.015}" />
   <xacro:property name="leg1_depth" value="${scaling_factor*0.015}" />
   <xacro:property name="leg1_mass" value="${(scaling_factor**3)*0.8}" />
-  <xacro:property name="leg1_joint_low" value="${-pi*2.0/18.0}" />
-  <xacro:property name="leg1_joint_high" value="${pi*2.0/18.0}" />
+  <xacro:property name="leg1_joint_low" value="${-pi*2.0}" />
+  <xacro:property name="leg1_joint_high" value="${pi*2.0}" />
 
   <xacro:property name="leg2_height" value="${scaling_factor*0.025}" />
   <xacro:property name="leg2_width" value="${scaling_factor*0.01}" />
   <xacro:property name="leg2_depth" value="${scaling_factor*0.1}" />
   <xacro:property name="leg2_mass" value="${(scaling_factor**3)*0.05}" />
-  <xacro:property name="leg2_joint_low" value="${-pi*2.0/18.0}" />
-  <xacro:property name="leg2_joint_high" value="${pi*2.0/18.0}" />
+  <xacro:property name="leg2_joint_low" value="${-pi*2.0}" />
+  <xacro:property name="leg2_joint_high" value="${pi*2.0}" />
   <xacro:property name="leg2_init_pitch" value="${pi*16.0/18.0}" />
 
   <xacro:property name="leg3_height" value="${scaling_factor*0.052}" />
   <xacro:property name="leg3_width" value="${scaling_factor*0.015}" />
   <xacro:property name="leg3_depth" value="${scaling_factor*0.015}" />
   <xacro:property name="leg3_mass" value="${(scaling_factor**3)*0.1}" />
-  <xacro:property name="leg3_joint_low" value="${-pi*2.0/18.0}" />
-  <xacro:property name="leg3_joint_high" value="${pi*2.0/18.0}" />
+  <xacro:property name="leg3_joint_low" value="${-pi*2.0}" />
+  <xacro:property name="leg3_joint_high" value="${pi*2.0}" />
 
   <xacro:property name="leg_tip_mass" value="${(scaling_factor**3)*0.02}" />
 
@@ -102,7 +102,7 @@
   <gazebo reference="base_link">
     <mu1>100000.0</mu1>
     <mu2>100000.0</mu2>
-    <material>Gazebo/Black</material>
+    <material>Gazebo/White</material>
   </gazebo>
   <gazebo reference="dummy_base_joint">
     <provideFeedback>true</provideFeedback>
@@ -214,7 +214,7 @@
         <geometry>
           <box size="${leg1_depth} ${leg1_width} ${leg1_height}"/>
         </geometry>
-        <material name="black"/>
+        <material name="white"/>
       </visual>
       <collision>
         <origin xyz="0 ${-reflect_right*leg1_width/2.0} ${-leg1_height/2.0}" rpy="0 0 0" />
@@ -267,7 +267,7 @@
     <gazebo reference="${prefix}_${suffix}_leg2">
       <mu1>100000.0</mu1>
       <mu2>100000.0</mu2>
-      <material>Gazebo/Black</material>
+      <material>Gazebo/White</material>
     </gazebo>
   </xacro:macro>
 
@@ -292,14 +292,14 @@
       <axis xyz="0 0 1"/>
       <parent link="base_link"/>
       <child link="${prefix}_${suffix}_leg3"/>
-      <origin xyz="${reflect_right*body_length/2.0} ${reflect_front*body_width/2.0} 0" rpy="0 0 ${reflect_front*pi/2.0 - reflect_front*reflect_right*pi/4.0}"/>
+      <origin xyz="${reflect_right*body_length/2.0} ${reflect_front*body_width/2.0} ${-(body_height/2.0)}" rpy="0 0 ${reflect_front*pi/2.0 - reflect_front*reflect_right*pi/4.0}"/>
       <limit lower="${leg3_joint_low}" upper="${leg3_joint_high}" effort="${servo_effort_limit}" velocity="${servo_vel}"/>
       <dynamics friction="0.0" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg3">
       <mu1>100000.0</mu1>
       <mu2>100000.0</mu2>
-      <material>Gazebo/White</material>
+      <material>Gazebo/Black</material>
     </gazebo>
   </xacro:macro>
 
